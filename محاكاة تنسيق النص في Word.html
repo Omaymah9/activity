@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>محاكاة تنسيق النص في Word</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e8edf4;--card:#fff;--ink:#1f2937;--mut:#5b6573;--blue:#2b579a;--green:#5fae3a;--orange:#f08a24;--bad:#c0392b;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171e2b;--card:#243047;--ink:#e8edf5;--mut:#9fb0c6;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#171e2b;--card:#243047;--ink:#e8edf5;--mut:#9fb0c6;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:Cairo,Tahoma,sans-serif;line-height:1.7;padding:12px}
+.wrap{max-width:980px;margin:0 auto}
+h1{font-size:1.25rem;margin:0 0 8px}
+.prog{display:flex;gap:4px;margin-bottom:4px}
+.prog i{flex:1;height:10px;border-radius:5px;background:#b9c3d2}
+.prog i.d{background:var(--green)}.prog i.c{background:var(--orange)}
+.plabel{font-size:.85rem;color:var(--mut);margin-bottom:10px}
+.coach{background:var(--card);border-radius:14px;border-inline-start:8px solid var(--orange);padding:10px 16px;margin-bottom:12px}
+.coach h2{margin:0;font-size:1.05rem;color:var(--orange)}
+.coach p{margin:4px 0}.tip{color:var(--mut);font-size:.9rem}
+#fb{min-height:28px;font-weight:700;margin-top:4px}
+#fb.ok{color:#2e8b3a}#fb.bad{color:var(--bad)}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.cta{font:inherit;font-weight:700;border:0;border-radius:20px;padding:6px 18px;cursor:pointer;background:var(--green);color:#fff}
+.cta.alt{background:#8a96a8}
+.cta:focus-visible,.b:focus-visible,.mi:focus-visible{outline:3px solid #1a73e8;outline-offset:2px}
+.stage{position:relative}
+.win{background:#fff;color:#222;border-radius:8px;overflow:hidden;box-shadow:0 4px 18px rgba(0,0,0,.25);direction:rtl}
+.win.shake{animation:sh .35s}
+@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.tb{background:var(--blue);color:#fff;padding:4px 12px;font-size:.85rem;display:flex;justify-content:space-between}
+.tabs{background:#e9e9e9;display:flex;gap:2px;padding:3px 8px 0;font-size:.85rem;overflow-x:auto}
+.tabs span{padding:3px 12px;white-space:nowrap}.tabs .on{background:#f3f3f3;border:1px solid #d0d0d0;border-bottom:0;color:var(--blue);font-weight:700}
+.rib{background:#f3f3f3;display:flex;flex-wrap:wrap;border-bottom:1px solid #d0d0d0}
+.grp{padding:6px 10px;border-inline-start:1px solid #d0d0d0;display:flex;flex-direction:column;align-items:center}
+.grp small{font-size:.7rem;color:#666;margin-top:3px}
+.row{display:flex;gap:3px;align-items:center;flex-wrap:wrap;justify-content:center}
+.b{min-width:34px;height:34px;border:1px solid transparent;background:transparent;border-radius:4px;cursor:pointer;font:inherit;color:#222;font-size:.9rem;padding:0 6px}
+.b:hover{background:#dde6f3;border-color:#a9bfdc}
+.box{border:1px solid #aaa;background:#fff;min-width:74px;height:30px;display:flex;align-items:center;justify-content:space-between;padding:0 8px;font-size:.85rem;cursor:pointer;gap:6px;font-family:Calibri,Tahoma,sans-serif}
+.dd{position:relative}
+.menu{position:absolute;top:100%;inset-inline-start:0;z-index:20;background:#fff;border:1px solid #aaa;box-shadow:0 6px 16px rgba(0,0,0,.3);min-width:150px;max-height:260px;overflow:auto;direction:ltr;text-align:left;padding:4px}
+.menu[hidden]{display:none}
+.mi{display:block;width:100%;text-align:left;border:0;background:transparent;font:inherit;padding:4px 10px;cursor:pointer;color:#222;font-size:.95rem}
+.mi:hover{background:#cfe0f5}
+.sw{display:grid;grid-template-columns:repeat(9,22px);gap:3px;padding:4px}
+.sw button{width:22px;height:22px;border:1px solid #888;cursor:pointer;padding:0}
+.sw button:hover{outline:2px solid #f08a24}
+.menu h4{margin:4px 4px 2px;font:700 .75rem Cairo,sans-serif;color:#555}
+.bar{display:block;height:4px;margin-top:-3px}
+.pulse{outline:3px solid #f08a24!important;outline-offset:2px;animation:pu 1s infinite}
+@keyframes pu{50%{outline-color:transparent}}
+.page{background:#cfd4da;padding:12px}
+.sheet{background:#fff;margin:0 auto;width:min(100%,720px);min-height:200px;display:flex;align-items:center;padding:24px 32px;box-shadow:0 1px 6px rgba(0,0,0,.35)}
+#doc{outline:none;width:100%;color:#000;direction:rtl;text-align:right;cursor:text;line-height:1.5}
+#t{padding:2px 4px;border-radius:2px}
+#t.hl{background:#bdbdbd}
+#t::selection,#doc::selection{background:#8ab4f8}
+.glow{text-shadow:0 0 6px #ffc000,0 0 14px #ffc000}
+.outline{-webkit-text-stroke:1px #ed7d31;color:transparent!important}
+.shadow{text-shadow:3px 3px 4px rgba(0,0,0,.55)}
+.reflection{-webkit-box-reflect:below 0 linear-gradient(transparent 55%,rgba(255,255,255,.55))}
+#hand{position:absolute;z-index:50;font-size:2.2rem;pointer-events:none;display:none;filter:drop-shadow(0 2px 2px rgba(0,0,0,.4));animation:bo .8s infinite}
+#hand.drag{animation:dr 1.6s infinite}
+@keyframes bo{50%{margin-top:8px}}
+@keyframes dr{0%{margin-inline-start:50px}100%{margin-inline-start:-90px}}
+#end{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:99}
+#end div{background:var(--card);padding:28px 36px;border-radius:18px;text-align:center;max-width:90%}
+#end b{font-size:1.5rem;color:var(--green)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>محاكاة تنسيق النص — الدرس 3.6 و 3.7</h1>
+<div class="prog" id="prog"></div>
+<div class="plabel" id="plabel"></div>
+<div class="coach">
+<h2 id="ct"></h2><p id="ci"></p><p class="tip" id="ctip"></p>
+<div id="fb" role="status"></div>
+<div class="acts"><button class="cta" id="next" hidden>التالي</button><button class="cta alt" id="reset">إعادة الخطوة</button></div>
+</div>
+<div class="stage" id="stage">
+<div class="win" id="win">
+<div class="tb"><span>المستند1 - Word</span><span>— ▢ ✕</span></div>
+<div class="tabs"><span>ملف</span><span class="on">الصفحة الرئيسية</span><span>إدراج</span><span>تصميم</span><span>تخطيط</span><span>مراجعة</span></div>
+<div class="rib" id="rib">
+<div class="grp"><div class="row"><button class="b" data-d>📋 لصق</button><button class="b" data-d>✂️</button><button class="b" data-d>⧉</button></div><small>الحافظة</small></div>
+<div class="grp"><div class="row">
+<div class="dd"><div class="box" id="fontBtn" data-t="font" tabindex="0" role="button"><span id="fontLbl">Calibri</span><span>▾</span></div>
+<div class="menu" id="m-font" hidden></div></div>
+<div class="dd"><div class="box" id="sizeBtn" data-t="size" style="min-width:56px" tabindex="0" role="button"><span id="sizeLbl">11</span><span>▾</span></div>
+<div class="menu" id="m-size" hidden></div></div>
+<button class="b" id="grow" data-g="1" title="تكبير الخط">A˄</button><button class="b" data-g="-1" title="تصغير الخط">A˅</button>
+</div>
+<div class="row">
+<button class="b" data-d><b>B</b></button><button class="b" data-d><i>I</i></button><button class="b" data-d><u>U</u></button>
+<div class="dd"><button class="b" id="colorBtn" data-t="color" title="لون الخط"><b>A</b><span class="bar" id="cbar" style="background:#000"></span></button>
+<div class="menu" id="m-color" hidden></div></div>
+<div class="dd"><button class="b" id="fxBtn" data-t="fx" title="تأثيرات النص"><b style="color:#2b79c9;text-shadow:0 0 5px #5ab">A</b> ▾</button>
+<div class="menu" id="m-fx" hidden></div></div>
+</div><small>الخط</small></div>
+<div class="grp"><div class="row"><button class="b" data-d>☰</button><button class="b" data-d>≡</button><button class="b" data-d>⇆</button><button class="b" data-d>¶</button></div><small>الفقرة</small></div>
+</div>
+<div class="page"><div class="sheet"><div id="doc" contenteditable="true" spellcheck="false" aria-label="مستند"><span id="t">مواطن رقمي</span></div></div></div>
+</div>
+<div id="hand">👆</div>
+</div>
+</div>
+<div id="end"><div><b>🎉 أحسنت!</b><p>أنهيت جميع خطوات تنسيق النص بنجاح.</p><button class="cta" id="again">ابدأ من جديد</button></div></div>
+<script>
+const $=s=>document.querySelector(s);
+const T=$('#t'),doc=$('#doc'),Z=1.7;
+const FONTS={'Calibri':"Calibri,'Segoe UI',sans-serif",'Arial':"Arial,Helvetica,sans-serif",'Traditional Arabic':"'Traditional Arabic','Amiri','Scheherazade New',serif",'Arabic Typesetting':"'Arabic Typesetting','Amiri',serif",'Tahoma':"Tahoma,sans-serif"};
+const SIZES=[8,10,11,12,14,16,18,20,24,28,36,48,72];
+const STD=['#C00000','#FF0000','#FFC000','#FFFF00','#92D050','#00B050','#00B0F0','#0070C0','#002060'];
+const THEME=['#000000','#FFFFFF','#44546A','#4472C4','#ED7D31','#A5A5A5','#FFC000','#5B9BD5','#70AD47'];
+const BLUES=['#00B0F0','#0070C0','#002060','#4472C4','#5B9BD5'];
+const FX=[['outline','Outline — مخطط'],['shadow','Shadow — ظل'],['reflection','Reflection — انعكاس'],['glow','Glow — توهج'],['','بدون تأثير']];
+const D={size:11,color:'#000000',font:'Calibri',fx:''};
+let st={...D},selected=false,step=0,lock=false,open=null;
+
+// build menus
+$('#m-font').innerHTML=Object.keys(FONTS).map(f=>`<button class="mi" data-f="${f}" style="font-family:${FONTS[f]}">${f}</button>`).join('');
+$('#m-size').innerHTML=SIZES.map(s=>`<button class="mi" data-s="${s}">${s}</button>`).join('');
+const sw=a=>a.map(c=>`<button data-c="${c}" style="background:${c}" aria-label="${c}"></button>`).join('');
+$('#m-color').innerHTML=`<h4>ألوان السمة</h4><div class="sw">${sw(THEME)}</div><h4>الألوان القياسية</h4><div class="sw">${sw(STD)}</div>`;
+$('#m-fx').innerHTML=FX.map(([k,n])=>`<button class="mi" data-x="${k}"><b class="${k}" style="font-size:1.1rem">A</b> &nbsp;${n}</button>`).join('');
+
+const S=[
+{n:'تحديد النص',t:'اضغط واسحب بالفأرة فوق «مواطن رقمي» لتظليله كاملاً.',tip:'يمكنك أيضًا استخدام لوحة المفاتيح: اضغط داخل النص ثم Shift + الأسهم.',ok:()=>selected,fresh:1},
+{n:'حجم الخط',t:'تأكد أن النص محدد، ثم من قائمة حجم الخط اختر 28.',tip:'يمكنك أيضًا الضغط على الزر A˄ لتكبير الخط.',ok:()=>st.size>=24,bad:'حاول مرة أخرى: اختر حجمًا أكبر، مثل 28.',fresh:1},
+{n:'لون الخط',t:'تأكد أن النص محدد، اضغط على سهم «لون الخط» ثم اختر اللون الأحمر.',tip:'تأكّد من تحديد النص الذي تريد تعديله.',ok:()=>st.color==='#FF0000',bad:'حاول مرة أخرى: اختر اللون الأحمر من الألوان القياسية.',fresh:1},
+{n:'نوع الخط',t:'افتح قائمة نوع الخط واختر Arial أو Traditional Arabic.',tip:'مرّر داخل القائمة لترى الخطوط المتاحة.',ok:()=>['Arial','Traditional Arabic'].includes(st.font),bad:'حاول مرة أخرى: اختر Arial أو Traditional Arabic.',fresh:1},
+{n:'تأثيرات النص',t:'اضغط على «تأثيرات النص» ثم اختر Glow (توهج) أو Outline (مخطط).',tip:'تأكّد من تحديد النص أولاً.',ok:()=>['glow','outline'].includes(st.fx),bad:'حاول مرة أخرى: اختر تأثير Glow أو Outline.',fresh:1},
+{n:'تدريب: تحديد الجملة',t:'تدريب 1: حدّد الجملة «أحافظ على نظافة مدرستي.» كاملة بالفأرة.',tip:'اضغط في بداية الجملة واسحب حتى نهايتها.',ok:()=>selected,txt:'أحافظ على نظافة مدرستي.'},
+{n:'تدريب: لون أزرق',t:'تدريب 2: لوّن الجملة باللون الأزرق.',tip:'رقّم الخطوات: 1 حدّد، 2 افتح قائمة اللون، 3 اختر الأزرق.',ok:()=>BLUES.includes(st.color),bad:'حاول مرة أخرى: اختر اللون الأزرق.'},
+{n:'تدريب: تأثير الظل',t:'تدريب 3: طبّق على الجملة تأثير Shadow (الظل).',tip:'من قائمة «تأثيرات النص».',ok:()=>st.fx==='shadow',bad:'حاول مرة أخرى: اختر تأثير Shadow.'},
+{n:'تدريب: تكبير الخط',t:'تدريب 4: كبّر الخط حتى يصبح 20 أو أكثر.',tip:'استخدم قائمة الحجم أو الزر A˄.',ok:()=>st.size>=20,bad:'كبّر الخط أكثر.'}
+];
+
+function apply(){
+ T.style.fontSize=st.size*Z+'px';T.style.color=st.color;T.style.fontFamily=FONTS[st.font];
+ T.className=(selected?'hl ':'')+st.fx;
+ $('#fontLbl').textContent=st.font;$('#sizeLbl').textContent=st.size;$('#cbar').style.background=st.color;
+}
+function say(m,k){const f=$('#fb');f.textContent=m;f.className=k||'';if(k==='bad'){const w=$('#win');w.classList.remove('shake');void w.offsetWidth;w.classList.add('shake')}}
+function beep(){try{const a=new (window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.frequency.value=660;o.connect(g);g.connect(a.destination);g.gain.setValueAtTime(.15,a.currentTime);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+.4);o.start();o.frequency.setValueAtTime(880,a.currentTime+.15);o.stop(a.currentTime+.4)}catch(e){}}
+function closeMenus(){open=null;document.querySelectorAll('.menu').forEach(m=>m.hidden=true)}
+function chk(){
+ if(lock)return;const s=S[step];
+ if(s.ok()){lock=true;closeMenus();say('✔ أحسنت! نفّذت الخطوة بشكل صحيح.','ok');beep();$('#next').hidden=false;$('#next').textContent=step===S.length-1?'إنهاء':'التالي'}
+ else if(s.bad)say(s.bad,'bad');
+ hint();
+}
+function needSel(){if(selected)return true;closeMenus();say('حاول مرة أخرى: تأكد من تحديد النص أولاً.','bad');hint();return false}
+function render(){
+ $('#prog').innerHTML=S.map((_,i)=>`<i class="${i<step?'d':i===step?'c':''}"></i>`).join('');
+ $('#plabel').textContent=(step<5?'السيناريو '+(step+1)+' من 5 — ':'التدريب (الدرس 3.7) — ')+S[step].n;
+ $('#ct').textContent='الخطوة '+(step+1)+': '+S[step].n;$('#ci').textContent=S[step].t;$('#ctip').textContent='💡 '+S[step].tip;
+}
+function begin(i){
+ step=i;lock=false;closeMenus();const s=S[i];
+ if(s.fresh||s.txt){st={...D}}
+ if(s.txt){T.textContent=s.txt;selected=false;getSelection().removeAllRanges()}
+ if(i===0){T.textContent='مواطن رقمي';selected=false;getSelection().removeAllRanges()}
+ $('#next').hidden=true;say('');apply();render();hint();
+}
+function hint(){
+ const h=$('#hand');document.querySelectorAll('.pulse').forEach(e=>e.classList.remove('pulse'));
+ if(lock){h.style.display='none';return}
+ let q;
+ if(!selected)q='#t';
+ else q=({1:open==='size'?'[data-s="28"]':'#sizeBtn',2:open==='color'?'[data-c="#FF0000"]':'#colorBtn',3:open==='font'?'[data-f="Arial"]':'#fontBtn',4:open==='fx'?'[data-x="glow"]':'#fxBtn',6:open==='color'?'[data-c="#0070C0"]':'#colorBtn',7:open==='fx'?'[data-x="shadow"]':'#fxBtn',8:'#grow'})[step];
+ const e=q&&$(q);if(!e){h.style.display='none';return}
+ e.classList.add('pulse');
+ const a=$('#stage').getBoundingClientRect(),r=e.getBoundingClientRect(),drag=!selected&&(step===0||step===5);
+ h.className=drag?'drag':'';h.textContent=drag?'🖱️':'👆';
+ h.style.display='block';h.style.left=(r.left-a.left+r.width/2-14)+'px';h.style.top=(r.bottom-a.top-6)+'px';
+}
+document.addEventListener('selectionchange',()=>{
+ const s=getSelection();if(!s.rangeCount||!doc.contains(s.anchorNode))return;
+ const a=s.toString().replace(/[\s\u200e\u200f]/g,''),f=T.textContent.replace(/\s/g,''),n=a.length>0&&a===f;
+ if(n!==selected){selected=n;apply();if(n)chk();else hint()}
+});
+doc.addEventListener('beforeinput',e=>e.preventDefault());
+doc.addEventListener('keydown',e=>{if(e.key.length===1&&!e.ctrlKey&&!e.metaKey)e.preventDefault()});
+$('#win').addEventListener('mousedown',e=>{if(e.target.closest('.rib'))e.preventDefault()});
+document.addEventListener('click',e=>{
+ const g=e.target.closest('[data-t],[data-s],[data-c],[data-f],[data-x],[data-g],[data-d]');
+ if(!g){closeMenus();hint();return}
+ if(lock&&!g.dataset.t&&!g.dataset.d){return}
+ if(g.dataset.d!==undefined){say('هذا الزر ليس مطلوبًا في هذه الخطوة.','bad');return}
+ if(g.dataset.t){const k=g.dataset.t,was=open===k;closeMenus();if(!was&&!lock){open=k;$('#m-'+k).hidden=false}hint();return}
+ if(!needSel())return;
+ if(g.dataset.s)st.size=+g.dataset.s;
+ else if(g.dataset.c)st.color=g.dataset.c;
+ else if(g.dataset.f)st.font=g.dataset.f;
+ else if(g.dataset.x!==undefined)st.fx=g.dataset.x;
+ else if(g.dataset.g){const i=SIZES.findIndex(v=>v>=st.size);let j=g.dataset.g>0?(SIZES[i]>st.size?i:i+1):i-1;st.size=SIZES[Math.max(0,Math.min(SIZES.length-1,j))]}
+ closeMenus();apply();chk();
+});
+document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches('.box')){e.preventDefault();e.target.click()}});
+$('#next').onclick=()=>{if(step===S.length-1){$('#end').style.display='flex';$('#hand').style.display='none'}else begin(step+1)};
+$('#reset').onclick=()=>begin(step);
+$('#again').onclick=()=>{$('#end').style.display='none';begin(0)};
+addEventListener('resize',hint);
+begin(0);
+</script>
+</body>
+</html>
